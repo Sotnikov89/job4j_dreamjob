@@ -46,11 +46,17 @@ public class Store {
     }
 
     public void save(Candidate candidate) {
-        candidate.setId(POST_ID.incrementAndGet());
+        if (candidate.getId() == 0) {
+            candidate.setId(POST_ID.incrementAndGet());
+        }
         candidates.put(candidate.getId(), candidate);
     }
 
-    public Post findById(int id) {
+    public Post findPostById(int id) {
         return posts.get(id);
+    }
+
+    public Candidate findCandidateById(int id) {
+        return candidates.get(id);
     }
 }
