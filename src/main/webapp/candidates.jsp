@@ -39,7 +39,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <%--@elvariable id="candidates" type="java.util.ArrayList"--%>
+                    <%--@elvariable id="candidates" type="java.util.List"--%>
                     <c:forEach items="${candidates}" var="can">
                         <tr>
                             <td>

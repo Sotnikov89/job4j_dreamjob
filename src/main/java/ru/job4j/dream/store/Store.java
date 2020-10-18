@@ -3,13 +3,10 @@ package ru.job4j.dream.store;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collector;
 
 public class Store {
     private static final Store INST = new Store();
@@ -33,12 +30,12 @@ public class Store {
         return INST;
     }
 
-    public List<Post> findAllPosts() {
-        return new ArrayList<>(posts.values());
+    public Collection<Post> findAllPosts() {
+        return posts.values();
     }
 
-    public List<Candidate> findAllCandidates() {
-        return new ArrayList<>(candidates.values());
+    public Collection<Candidate> findAllCandidates() {
+        return candidates.values();
     }
 
     public void save(Post post) {
