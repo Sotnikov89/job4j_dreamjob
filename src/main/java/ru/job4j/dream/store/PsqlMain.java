@@ -8,6 +8,9 @@ public class PsqlMain {
 
         Store store = PsqlStore.instOf();
 
+        store.save(new Post(1,"New Java Job"));
+        store.save(new Candidate(1,"New Junior Developer"));
+
         store.save(new Post(0, "Java Job"));
         for (Post post : store.findAllPosts()) {
             System.out.println(post.getId() + " " + post.getName());

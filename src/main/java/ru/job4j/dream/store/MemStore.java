@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MemStore {
     private static final MemStore INST = new MemStore();
 
-    private Map<Integer, Post> posts = new ConcurrentHashMap<>();
+    private Map<Integer, Post> posts = new ConcurrentHashMap<Integer, Post>();
 
-    private Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private Map<Integer, Candidate> candidates = new ConcurrentHashMap<Integer, Candidate>();
 
     private static AtomicInteger POST_ID = new AtomicInteger(4);
 

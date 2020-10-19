@@ -139,7 +139,7 @@ public class PsqlStore implements Store{
         String sql = "UPDATE post " + "SET name = ? " + "WHERE id = ?";
         try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
             ps.setString(1, post.getName());
-            ps.setInt(2, post.getId());
+            ps.setLong(2, post.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -150,7 +150,7 @@ public class PsqlStore implements Store{
         String sql = "UPDATE candidate " + "SET name = ? " + "WHERE id = ?";
         try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
+            ps.setLong(2, candidate.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
