@@ -5,6 +5,16 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.DownloadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.UploadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>PostServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlets.PostServlet</servlet-class>
   </servlet>
@@ -25,13 +35,23 @@
   </servlet-mapping>
 
   <servlet-mapping>
+    <servlet-name>CandidateServlet</servlet-name>
+    <url-pattern>/candidates.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/posts.do</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>CandidateServlet</servlet-name>
-    <url-pattern>/candidates.do</url-pattern>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/upload</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/download</url-pattern>
   </servlet-mapping>
 
 </web-app>

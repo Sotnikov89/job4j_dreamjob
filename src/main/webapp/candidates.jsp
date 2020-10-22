@@ -2,6 +2,7 @@
 <%@ page import="ru.job4j.dream.store.MemStore" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -36,17 +37,21 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Фото</th>
                     </tr>
                     </thead>
                     <tbody>
                     <%--@elvariable id="candidates" type="java.util.List"--%>
-                    <c:forEach items="${candidates}" var="can">
+                    <c:forEach items="${candidates}" var="can" varStatus="status">
                         <tr>
                             <td>
                                 <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${can.name}"/>
+                            </td>
+                            <td>
+                                <img src="<c:url value='/download?name=${can.photoId}'/>" width="100px" height="100px"/>
                             </td>
                         </tr>
                     </c:forEach>

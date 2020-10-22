@@ -120,9 +120,10 @@ public class PsqlStore implements Store{
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, photo_id) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getPhotoId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -147,10 +148,11 @@ public class PsqlStore implements Store{
     }
 
     private void update(Candidate candidate) {
-        String sql = "UPDATE candidate " + "SET name = ? " + "WHERE id = ?";
+        String sql = "UPDATE candidate " + "SET name = ?, photo_id = ? " + "WHERE id = ?";
         try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
             ps.setString(1, candidate.getName());
-            ps.setLong(2, candidate.getId());
+            ps.setInt(2, candidate.getPhotoId());
+            ps.setLong(3, candidate.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -167,6 +169,43 @@ public class PsqlStore implements Store{
     public Candidate findCandidateById(int id) {
         String sql = "SELECT name FROM candidate WHERE id = ?";
         return new Candidate(id, getNameById(sql,id));
+    }
+
+    @Override
+    public int savePhotoReturnId(String name) {
+        int id=0;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO photo(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, name);
+            ps.execute();
+            try (ResultSet it = ps.getGeneratedKeys()) {
+                while (it.next()) {
+                    id = it.getInt(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    @Override
+    public String getPhotoNameById(int id) {
+        String name = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT name FROM photo WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    name = it.getString("name");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 
     private String getNameById(String sql, int id) {
