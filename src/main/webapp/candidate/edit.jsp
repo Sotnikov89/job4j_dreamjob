@@ -45,7 +45,6 @@
                     <div class="form-group">
                         <label>Имя</label>
                         <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
-
                         <label>Фото</label>
                         <input type="file" class="form-control" name="file">
                     </div>
