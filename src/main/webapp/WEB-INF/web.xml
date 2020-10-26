@@ -15,11 +15,6 @@
   </servlet>
 
   <servlet>
-    <servlet-name>UploadServlet</servlet-name>
-    <servlet-class>ru.job4j.dream.servlets.UploadServlet</servlet-class>
-  </servlet>
-
-  <servlet>
     <servlet-name>PostServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlets.PostServlet</servlet-class>
   </servlet>
@@ -47,11 +42,6 @@
   <servlet-mapping>
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/posts.do</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>UploadServlet</servlet-name>
-    <url-pattern>/upload</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class DownloadServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String name = PsqlStore.instOf().getPhotoNameById(Integer.parseInt(req.getParameter("id")));
         resp.setContentType("name=" + name);
