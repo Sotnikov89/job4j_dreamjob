@@ -5,6 +5,11 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.AuthServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>DownloadServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlets.DownloadServlet</servlet-class>
   </servlet>
@@ -52,6 +57,11 @@
   <servlet-mapping>
     <servlet-name>DownloadServlet</servlet-name>
     <url-pattern>/download</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/auth.do</url-pattern>
   </servlet-mapping>
 
 </web-app>
