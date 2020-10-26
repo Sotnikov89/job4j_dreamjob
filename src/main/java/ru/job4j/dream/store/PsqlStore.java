@@ -75,7 +75,7 @@ public class PsqlStore implements Store{
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(new Candidate(it.getInt("id"), it.getString("name"), it.getInt("photo_id")));
                 }
             }
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class PsqlStore implements Store{
         String sql = "UPDATE post " + "SET name = ? " + "WHERE id = ?";
         try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
             ps.setString(1, post.getName());
-            ps.setLong(2, post.getId());
+            ps.setInt(2, post.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -152,7 +152,7 @@ public class PsqlStore implements Store{
         try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getPhotoId());
-            ps.setLong(3, candidate.getId());
+            ps.setInt(3, candidate.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

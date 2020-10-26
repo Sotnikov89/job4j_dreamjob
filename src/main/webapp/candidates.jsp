@@ -51,7 +51,10 @@
                                 <c:out value="${can.name}"/>
                             </td>
                             <td>
-                                <img src="<c:url value='/download?name=${can.photoId}'/>" width="100px" height="100px"/>
+                                <img src="<c:url value='/download?id=${can.photoId}'/>" width="100px" height="100px"/>
+                            </td>
+                            <td>
+                                <a href="<c:url value='/download?id=${can.photoId}'/>">Download Photo</a>
                             </td>
                         </tr>
                     </c:forEach>

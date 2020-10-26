@@ -7,9 +7,19 @@ public class Candidate {
     private String name;
     private int photoId;
 
+    public Candidate(int id) {
+        this.id = id;
+    }
+
     public Candidate(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Candidate(int id, String name, int photoId) {
+        this.id = id;
+        this.name = name;
+        this.photoId = photoId;
     }
 
     public int getId() {

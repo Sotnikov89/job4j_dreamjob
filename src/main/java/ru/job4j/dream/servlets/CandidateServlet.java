@@ -9,8 +9,6 @@ import ru.job4j.dream.store.PsqlStore;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public class CandidateServlet extends HttpServlet {
 
@@ -29,10 +28,9 @@ public class CandidateServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
-        int photoId = 0;
-        String name = null;
+        Candidate candidate = new Candidate(Integer.parseInt(req.getParameter("id")));
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
@@ -47,31 +45,22 @@ public class CandidateServlet extends HttpServlet {
             }
             for (FileItem item : items) {
                 if (item.isFormField()) {
-
-                    System.out.println(item.getFieldName());
-                    System.out.println(item.getName());
-
-                    name = item.getName();
+                    candidate.setName(item.getString(req.getCharacterEncoding()));
                 }
                 else {
-                    File file = new File(folder + File.separator + item.getName());
+                    String uniqueName = UUID.randomUUID().toString()
+                            + item.getName().substring(item.getName().lastIndexOf("."));
+                    File file = new File(folder + File.separator + uniqueName);
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
-                        photoId = PsqlStore.instOf().savePhotoReturnId(item.getName());
+                        candidate.setPhotoId(PsqlStore.instOf().savePhotoReturnId(uniqueName));
                     }
                 }
             }
         } catch (FileUploadException e) {
                 e.printStackTrace();
         }
-
-        System.out.println(photoId);
-
-
-        Candidate candidate = new Candidate(Integer.parseInt(req.getParameter("id")), name);
-        candidate.setPhotoId(photoId);
         PsqlStore.instOf().save(candidate);
-
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

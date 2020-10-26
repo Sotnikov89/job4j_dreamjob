@@ -13,7 +13,8 @@ import java.io.IOException;
 public class DownloadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = PsqlStore.instOf().getPhotoNameById(Integer.parseInt(req.getParameter("name")));
+
+        String name = PsqlStore.instOf().getPhotoNameById(Integer.parseInt(req.getParameter("id")));
         resp.setContentType("name=" + name);
         resp.setContentType("image/png");
         resp.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
