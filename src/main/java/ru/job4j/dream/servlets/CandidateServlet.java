@@ -22,9 +22,20 @@ public class CandidateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getParameter("canId")!=null){
+            doDelete(req,resp);
+        }
         req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
         req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        PsqlStore.instOf().deleteCandidateAndHisPhotoById(
+                Integer.parseInt(req.getParameter("canId")),
+                Integer.parseInt(req.getParameter("photoId"))
+        );
     }
 
     @Override

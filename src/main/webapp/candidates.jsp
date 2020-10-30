@@ -75,6 +75,9 @@
                             <td>
                                 <a href="<c:url value='/download?id=${can.photoId}'/>">Download Photo</a>
                             </td>
+                            <td>
+                                <a href="<c:url value='/candidates.do?canId=${can.id}&photoId=${can.photoId}'/>">Delete</a>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>

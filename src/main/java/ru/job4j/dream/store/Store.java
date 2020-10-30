@@ -21,4 +21,6 @@ public interface Store {
     int savePhotoReturnId(String name);
 
     String getPhotoNameById (int id);
+
+    void deleteCandidateAndHisPhotoById(int candidate_id, int photo_id);
 }

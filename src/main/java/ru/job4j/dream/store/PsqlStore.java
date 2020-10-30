@@ -208,6 +208,26 @@ public class PsqlStore implements Store{
         return name;
     }
 
+    @Override
+    public void deleteCandidateAndHisPhotoById(int candidate_id, int photo_id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("DELETE FROM candidate WHERE id = ?")) {
+            ps.setInt(1, candidate_id);
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (photo_id!=0) {
+            try (Connection cn = pool.getConnection();
+                 PreparedStatement ps =  cn.prepareStatement("DELETE FROM photo WHERE id = ?")) {
+                ps.setInt(1, photo_id);
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private String getNameById(String sql, int id) {
         String name = null;
         try (Connection cn = pool.getConnection();
