@@ -25,7 +25,7 @@ public interface Store {
 
     void deleteCandidateAndHisPhotoById(int candidate_id, int photo_id);
 
-    User findUserById(int id);
+    User findUserByEmail(String email);
 
     User save(User user);
 
