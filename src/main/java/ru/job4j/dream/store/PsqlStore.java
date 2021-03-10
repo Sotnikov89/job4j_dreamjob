@@ -24,7 +24,7 @@ public class PsqlStore implements Store{
 
     private PsqlStore() {
         Properties cfg = new Properties();
-        try (BufferedReader io = new BufferedReader(new FileReader("db.properties"))) {
+        try (BufferedReader io = new BufferedReader(new FileReader("C:\\Users\\Вадим\\Desktop\\dreamjob\\db.properties"))) {
             cfg.load(io);
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -76,7 +76,7 @@ public class PsqlStore implements Store{
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name"), it.getInt("photo_id")));
+                    candidates.add(new Candidate(it.getInt("id"), it.getString("name"), it.getInt("photoid")));
                 }
             }
         } catch (Exception e) {

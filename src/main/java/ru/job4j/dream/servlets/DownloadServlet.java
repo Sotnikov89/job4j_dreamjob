@@ -1,5 +1,6 @@
 package ru.job4j.dream.servlets;
 
+import com.google.common.io.Files;
 import ru.job4j.dream.store.PsqlStore;
 
 import javax.servlet.ServletException;
@@ -14,13 +15,18 @@ public class DownloadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        String name = PsqlStore.instOf().getPhotoNameById(Integer.parseInt(req.getParameter("id")));
-        resp.setContentType("name=" + name);
-        resp.setContentType("image/png");
-        resp.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
-        File file = new File("images" + File.separator + name);
-        try (FileInputStream in = new FileInputStream(file)) {
-            resp.getOutputStream().write(in.readAllBytes());
+        String name = req.getParameter("photoId");
+        File downloadFile = null;
+        for (File file : new File("C:\\Users\\Вадим\\Desktop\\images\\").listFiles()) {
+            if (name.equals(Files.getNameWithoutExtension(file.getName()))) {
+                downloadFile = file;
+                break;
+            }
+        }
+        resp.setContentType("application/octet-stream");
+        resp.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFile.getName() + "\"");
+        try (FileInputStream stream = new FileInputStream(downloadFile)){
+            resp.getOutputStream().write(stream.readAllBytes());
         }
     }
 }

@@ -1,8 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
-<%@ page import="ru.job4j.dream.model.User" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,9 +24,9 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
+    Candidate can = new Candidate(0, "");
     if (id != null) {
-        candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
+        can = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
 %>
 <div class="container pt-3">
@@ -47,13 +46,12 @@
             </li>
             <li class="nav-item">
                 <%--@elvariable id="user" type="java.ru.job4j.dream.model.User"--%>
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
-                    <%=((User) request.getSession().getAttribute("user")).getName()%> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
             </li>
         </ul>
     </div>
     <div class="row">
-        <div class="card" style="...">
+        <div class="card" style="width: 100%">
             <div class="card-header">
                 <% if (id == null) { %>
                 Новый кандидат.
@@ -62,12 +60,10 @@
                 <% } %>
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post" enctype="multipart/form-data">
+                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
-                        <label>Фото</label>
-                        <input type="file" class="form-control" name="file">
+                        <input type="text" class="form-control" name="name" value="<%=can.getName()%>">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

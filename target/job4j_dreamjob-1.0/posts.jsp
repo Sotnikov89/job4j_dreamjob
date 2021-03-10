@@ -38,7 +38,7 @@
             </li>
             <li class="nav-item">
                 <%--@elvariable id="user" type="java.ru.job4j.dream.model.User"--%>
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"><c:out value="${user.name}"/> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
             </li>
         </ul>
     </div>

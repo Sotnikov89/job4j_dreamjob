@@ -38,7 +38,7 @@
             </li>
             <li class="nav-item">
                 <%--@elvariable id="user" type="java.ru.job4j.dream.model.User"--%>
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"><c:out value="${user.name}"/> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
             </li>
         </ul>
     </div>
@@ -53,26 +53,34 @@
                     <tr>
                         <th scope="col">Названия</th>
                         <th scope="col">Фото</th>
+                        <th scope="col">Добавить фото</th>
+                        <th scope="col">Удалить кандидата</th>
                     </tr>
                     </thead>
                     <tbody>
                     <%--@elvariable id="candidates" type="java.util.List"--%>
-                    <c:forEach items="${candidates}" var="can" varStatus="status">
+                    <c:forEach items="${candidates}" var="can">
                         <tr>
                             <td>
-                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
+                                <a href="<c:url value="/candidate/edit.jsp?id=${can.id}"/>">
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${can.name}"/>
                             </td>
                             <td>
-                                <img src="<c:url value='/download?id=${can.photoId}'/>" width="100px" height="100px"/>
+                                <img src="<c:url value='/download?photoId=${can.photoId}'/>" width="100px" height="100px"/>
                             </td>
                             <td>
-                                <a href="<c:url value='/download?id=${can.photoId}'/>">Download Photo</a>
+                                <a href="<c:url value="photoUpload.jsp?id=${can.id}"/>">
+                                    <button type="submit" class="btn btn-outline-secondary">Отправить</button>
+                                </a>
                             </td>
                             <td>
-                                <a href="<c:url value='/candidates.do?canId=${can.id}&photoId=${can.photoId}'/>">Delete</a>
+                                <form action="<c:url value="/candidates.do"/>" method="GET">
+                                    <input type="hidden" name="method" value="Delete" />
+                                    <input type="hidden" name="id" value='<c:out value="${can.id}"/>' />
+                                    <input type="submit" value="Удалить"/>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

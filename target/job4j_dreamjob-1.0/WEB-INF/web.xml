@@ -15,34 +15,9 @@
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>AuthFilter</filter-name>
-    <url-pattern>/candidate/edit.jsp</url-pattern>
-  </filter-mapping>
-
-  <filter-mapping>
-    <filter-name>AuthFilter</filter-name>
-    <url-pattern>/post/edit.jsp</url-pattern>
-  </filter-mapping>
-
-  <servlet>
-    <servlet-name>RegServlet</servlet-name>
-    <servlet-class>ru.job4j.dream.servlets.RegServlet</servlet-class>
-  </servlet>
-
   <servlet>
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlets.AuthServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>DownloadServlet</servlet-name>
-    <servlet-class>ru.job4j.dream.servlets.DownloadServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>PostServlet</servlet-name>
-    <servlet-class>ru.job4j.dream.servlets.PostServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -51,13 +26,33 @@
   </servlet>
 
   <servlet>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.DownloadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>IndexServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlets.IndexServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>PostServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.PostServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.RegServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.UploadServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
-    <servlet-name>IndexServlet</servlet-name>
-    <url-pattern>/index.do</url-pattern>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/auth.do</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -66,23 +61,28 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>PostServlet</servlet-name>
-    <url-pattern>/posts.do</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
     <servlet-name>DownloadServlet</servlet-name>
     <url-pattern>/download</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>AuthServlet</servlet-name>
-    <url-pattern>/auth.do</url-pattern>
+    <servlet-name>IndexServlet</servlet-name>
+    <url-pattern>/index.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>PostServlet</servlet-name>
+    <url-pattern>/posts.do</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>RegServlet</servlet-name>
     <url-pattern>/reg.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/upload</url-pattern>
   </servlet-mapping>
 
 </web-app>

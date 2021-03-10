@@ -1,8 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.model.Post" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
-<%@ page import="ru.job4j.dream.model.User" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -47,8 +46,7 @@
             </li>
             <li class="nav-item">
                 <%--@elvariable id="user" type="java.ru.job4j.dream.model.User"--%>
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
-                    <%=((User) request.getSession().getAttribute("user")).getName()%> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
             </li>
         </ul>
     </div>
