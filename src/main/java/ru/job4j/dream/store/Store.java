@@ -7,6 +7,7 @@ import ru.job4j.dream.model.User;
 import java.util.Collection;
 
 public interface Store {
+
     Collection<Post> findAllPosts();
 
     Collection<Candidate> findAllCandidates();
@@ -15,19 +16,16 @@ public interface Store {
 
     void save(Candidate candidate);
 
+    void save(User user);
+
+    void savePhoto(int photoId);
+
     Post findPostById(int id);
 
     Candidate findCandidateById(int id);
 
-    int savePhotoReturnId(String name);
+    User findUserByEmail (String email);
 
-    String getPhotoNameById (int id);
+    void deleteCandidate (int id);
 
-    void deleteCandidateAndHisPhotoById(int candidate_id, int photo_id);
-
-    User findUserByEmail(String email);
-
-    User save(User user);
-
-    void deleteUserById(int id);
 }

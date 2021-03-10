@@ -30,7 +30,7 @@ public class RegServlet extends HttpServlet {
         user.setEmail(email);
         user.setPassword(password);
 
-        req.getSession().setAttribute("user", PsqlStore.instOf().save(user));
+        //req.getSession().setAttribute("user", PsqlStore.instOf().save(user));
         resp.sendRedirect(req.getContextPath() + "/login.");
     }
 }
