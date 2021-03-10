@@ -9,7 +9,7 @@
   <version>1.0</version>
   <packaging>war</packaging>
 
-  <name>job4j_dreamjob Maven Webapp</name>
+  <name>job4j_dreamjob</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
