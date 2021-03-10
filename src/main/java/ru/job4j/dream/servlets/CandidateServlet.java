@@ -7,6 +7,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.store.PsqlStore;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

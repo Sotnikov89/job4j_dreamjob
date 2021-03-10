@@ -1,0 +1,14 @@
+ru\job4j\dream\servlets\AuthServlet.class
+ru\job4j\dream\store\MemStore.class
+ru\job4j\dream\model\Candidate.class
+ru\job4j\dream\model\Post.class
+ru\job4j\dream\filters\AuthFilter.class
+ru\job4j\dream\servlets\CandidateServlet.class
+ru\job4j\dream\servlets\IndexServlet.class
+ru\job4j\dream\servlets\DownloadServlet.class
+ru\job4j\dream\servlets\PostServlet.class
+ru\job4j\dream\store\Store.class
+ru\job4j\dream\store\PsqlStore.class
+ru\job4j\dream\model\User.class
+ru\job4j\dream\store\PsqlMain.class
+ru\job4j\dream\store\PsqlStore$Lazy.class

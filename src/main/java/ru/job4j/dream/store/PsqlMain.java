@@ -3,7 +3,11 @@ package ru.job4j.dream.store;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
+import java.util.Optional;
+import java.util.stream.Stream;
+
 public class PsqlMain {
+
     public static void main(String[] args) {
 
         Store store = PsqlStore.instOf();
