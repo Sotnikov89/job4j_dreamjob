@@ -2,8 +2,6 @@ package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
 
-
-
 public class PsqlMain {
 
     public static void main(String[] args) {

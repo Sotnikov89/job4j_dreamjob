@@ -48,10 +48,14 @@ public class Candidate {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Candidate candidate = (Candidate) o;
-        return id == candidate.id;
+        return id == candidate.id && photoId == candidate.photoId && Objects.equals(name, candidate.name);
     }
 
     @Override

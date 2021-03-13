@@ -9,13 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 public class CandidateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("method")!=null){
-            doDelete(req,resp);
+        if (req.getParameter("method") != null) {
+            doDelete(req, resp);
         }
         req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
         req.setAttribute("user", req.getSession().getAttribute("user"));

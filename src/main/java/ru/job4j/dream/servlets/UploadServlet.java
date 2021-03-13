@@ -37,9 +37,9 @@ public class UploadServlet extends HttpServlet {
             }
             for (FileItem item : items) {
                 if (!item.isFormField()) {
-                    File file = new File(folder + File.separator +
-                            req.getParameter("id") + "." +
-                            Files.getFileExtension(item.getName()));
+                    File file = new File(folder + File.separator
+                            + req.getParameter("id") + "."
+                            + Files.getFileExtension(item.getName()));
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }
@@ -49,6 +49,6 @@ public class UploadServlet extends HttpServlet {
         } catch (FileUploadException e) {
             e.printStackTrace();
         }
-        resp.sendRedirect(req.getContextPath()+"/candidates.do");
+        resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

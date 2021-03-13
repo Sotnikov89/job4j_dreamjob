@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
-public class PsqlStore implements Store{
+public class PsqlStore implements Store {
 
     private final BasicDataSource pool = new BasicDataSource();
 
@@ -136,7 +136,7 @@ public class PsqlStore implements Store{
     @Override
     public Candidate findCandidateById(int id) {
         String sql = "SELECT name FROM candidate WHERE id = ?";
-        return new Candidate(id, getNameById(sql,id), id);
+        return new Candidate(id, getNameById(sql, id), id);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class PsqlStore implements Store{
     @Override
     public void deleteCandidate(int id) {
         String sql = "DELETE FROM candidate WHERE id = ?";
-        try(Connection cn = pool.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
+        try (Connection cn = pool.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
             for (File file : new File("C:\\Users\\Вадим\\Desktop\\images\\").listFiles()) {
