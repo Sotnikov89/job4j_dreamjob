@@ -20,7 +20,8 @@
             if ($('#idSurname').val() === '') {
                 alert("Пожалуйста, введите вашу фамилию");
             }
-            if ($('#idSexM').val() === '' && $('#idSexF').val() === '') {
+            if (document.getElementById('idSexM').checked === false
+                && document.getElementById('idSexF').checked === false) {
                 alert("Пожалуйста, укажите ваш пол");
             }
             if ($('#idDescription').val() === '') {
