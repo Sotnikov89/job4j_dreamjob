@@ -6,5 +6,6 @@ CREATE TABLE post (
 CREATE TABLE candidate (
                       id SERIAL PRIMARY KEY,
                       name TEXT,
-                      photoid integer
+                      photoid integer,
+                      city_id integer
 );

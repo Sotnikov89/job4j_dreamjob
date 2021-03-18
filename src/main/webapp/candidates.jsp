@@ -54,15 +54,17 @@
                         <th scope="col">Названия</th>
                         <th scope="col">Фото</th>
                         <th scope="col">Добавить фото</th>
+                        <th scope="col">Город</th>
                         <th scope="col">Удалить кандидата</th>
                     </tr>
                     </thead>
                     <tbody>
                     <%--@elvariable id="candidates" type="java.util.List"--%>
                     <c:forEach items="${candidates}" var="can">
+                        <c:set var="city_id" value="${can.city_id}"/>
                         <tr>
                             <td>
-                                <a href="<c:url value="/candidate/edit.jsp?id=${can.id}"/>">
+                                <a href="<c:url value="/candidate/edit.jsp?id=${can.id}&cityId=${can.city_id}&cityName=${cities[city_id]}"/>">
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${can.name}"/>
@@ -74,6 +76,10 @@
                                 <a href="<c:url value="photoUpload.jsp?id=${can.id}"/>">
                                     <button type="submit" class="btn btn-outline-secondary">Отправить</button>
                                 </a>
+                            </td>
+                            <td>
+                                    <%--@elvariable id="cities" type="java.util.Map"--%>
+                                <c:out value="${cities[city_id]}"/>
                             </td>
                             <td>
                                 <form action="<c:url value="/candidates.do"/>" method="GET">

@@ -12,6 +12,9 @@ public class PostServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getParameter("method") != null) {
+            doDelete(req, resp);
+        }
         req.setAttribute("posts", PsqlStore.instOf().findAllPosts());
         req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("posts.jsp").forward(req, resp);
@@ -23,9 +26,12 @@ public class PostServlet extends HttpServlet {
         PsqlStore.instOf().save(
                 new Post(
                         Integer.parseInt(req.getParameter("id")),
-                        req.getParameter("name")
-                )
-        );
+                        req.getParameter("name")));
         resp.sendRedirect(req.getContextPath() + "/posts.do");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PsqlStore.instOf().deletePost(Integer.parseInt(req.getParameter("id")));
     }
 }

@@ -5,12 +5,15 @@ import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
 import java.util.Collection;
+import java.util.Map;
 
 public interface Store {
 
     Collection<Post> findAllPosts();
 
     Collection<Candidate> findAllCandidates();
+
+    Map<Integer, String> findAllCities();
 
     void save(Post post);
 
@@ -27,5 +30,7 @@ public interface Store {
     User findUserByEmail(String email);
 
     void deleteCandidate(int id);
+
+    void deletePost(int id);
 
 }

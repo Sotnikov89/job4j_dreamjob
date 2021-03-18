@@ -52,6 +52,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Закрыть вакансию</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,6 +64,13 @@
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${post.name}"/>
+                            </td>
+                            <td>
+                                <form action="<c:url value="/posts.do"/>" method="GET">
+                                    <input type="hidden" name="method" value="Delete" />
+                                    <input type="hidden" name="id" value='<c:out value="${post.id}"/>' />
+                                    <input type="submit" value="Закрыть"/>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

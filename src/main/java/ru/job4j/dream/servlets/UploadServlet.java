@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class UploadServlet extends HttpServlet {
@@ -37,6 +38,10 @@ public class UploadServlet extends HttpServlet {
             }
             for (FileItem item : items) {
                 if (!item.isFormField()) {
+                    Arrays.stream(folder.listFiles())
+                            .filter(file -> Files.getNameWithoutExtension(file.getName()).equals(req.getParameter("id")))
+                            .findAny().ifPresent(File::delete); // if file with this name is exist - delete it, because it's update
+
                     File file = new File(folder + File.separator
                             + req.getParameter("id") + "."
                             + Files.getFileExtension(item.getName()));

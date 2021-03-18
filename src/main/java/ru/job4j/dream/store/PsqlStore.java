@@ -13,10 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class PsqlStore implements Store {
 
@@ -24,7 +21,7 @@ public class PsqlStore implements Store {
 
     private PsqlStore() {
         Properties cfg = new Properties();
-        try (BufferedReader io = new BufferedReader(new FileReader("C:\\Users\\Вадим\\Desktop\\dreamjob\\db.properties"))) {
+        try (BufferedReader io = new BufferedReader(new FileReader("C:\\Users\\Вадим\\Desktop\\java\\dreamjob\\db.properties"))) {
             cfg.load(io);
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -76,13 +73,101 @@ public class PsqlStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name"), it.getInt("photoid")));
+                    candidates.add(new Candidate.Builder()
+                            .setId(it.getInt("id"))
+                            .setName(it.getString("name"))
+                            .setPhotoId(it.getInt("photoid"))
+                            .setCity_id(it.getInt("city_id"))
+                            .build());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return candidates;
+    }
+
+    @Override
+    public Map<Integer, String> findAllCities() {
+        Map<Integer, String> cities = new HashMap<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM city")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    cities.put(it.getInt("id"), it.getString("name"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cities;
+    }
+
+    @Override
+    public Post findPostById(int id) {
+        String sql = "SELECT name FROM post WHERE id = ?";
+        return new Post(id, getNameById(sql, id));
+    }
+
+    @Override
+    public Candidate findCandidateById(int id) {
+        String sql = "SELECT name FROM candidate WHERE id = ?";
+        return  new Candidate.Builder()
+                .setId(id)
+                .setName(getNameById(sql, id))
+                .setPhotoId(id)
+                .build();
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        User user = new User();
+        try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    user.setId(it.getInt("id"));
+                    user.setName(it.getString("name"));
+                    user.setEmail(it.getString("email"));
+                    user.setPassword(it.getString("password"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
+    public void deleteCandidate(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE FROM candidate WHERE id = ?")) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+            for (File file : new File("C:\\Users\\Вадим\\Desktop\\images\\").listFiles()) {
+                if (Integer.toString(id).equals(Files.getNameWithoutExtension(file.getName()))) {
+                    file.delete();
+                    break;
+                }
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deletePost(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE FROM post WHERE id = ?")) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
@@ -94,6 +179,7 @@ public class PsqlStore implements Store {
         }
     }
 
+    @Override
     public void save(Candidate candidate) {
         if (candidate.getId() == 0) {
             create(candidate);
@@ -127,55 +213,6 @@ public class PsqlStore implements Store {
         }
     }
 
-    @Override
-    public Post findPostById(int id) {
-        String sql = "SELECT name FROM post WHERE id = ?";
-        return new Post(id, getNameById(sql, id));
-    }
-
-    @Override
-    public Candidate findCandidateById(int id) {
-        String sql = "SELECT name FROM candidate WHERE id = ?";
-        return new Candidate(id, getNameById(sql, id), id);
-    }
-
-    @Override
-    public User findUserByEmail(String email) {
-        User user = new User();
-        String sql = "SELECT * FROM users WHERE email = ?";
-        try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
-            ps.setString(1, email);
-            try (ResultSet it = ps.executeQuery()) {
-                while (it.next()) {
-                    user.setId(it.getInt("id"));
-                    user.setName(it.getString("name"));
-                    user.setEmail(it.getString("email"));
-                    user.setPassword(it.getString("password"));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
-    @Override
-    public void deleteCandidate(int id) {
-        String sql = "DELETE FROM candidate WHERE id = ?";
-        try (Connection cn = pool.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            for (File file : new File("C:\\Users\\Вадим\\Desktop\\images\\").listFiles()) {
-                if (Integer.toString(id).equals(Files.getNameWithoutExtension(file.getName()))) {
-                    file.delete();
-                    break;
-                }
-            }
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-    }
-
     private void create(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name) VALUES (?)")
@@ -189,9 +226,10 @@ public class PsqlStore implements Store {
 
     private void create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)")
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, city_id) VALUES (?, ?)")
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getCity_id());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,9 +248,10 @@ public class PsqlStore implements Store {
     }
 
     private void update(Candidate candidate) {
-        String sql = "UPDATE candidate " + "SET name = ?" + "WHERE id = ?";
+        String sql = "UPDATE candidate " + "SET name = ?, city_id = ?" + "WHERE id = ?";
         try (Connection cn = pool.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getCity_id());
             ps.setInt(3, candidate.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {

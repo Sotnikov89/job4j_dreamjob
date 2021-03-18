@@ -31,6 +31,11 @@
   </servlet>
 
   <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.UploadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>IndexServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlets.IndexServlet</servlet-class>
   </servlet>
@@ -46,8 +51,8 @@
   </servlet>
 
   <servlet>
-    <servlet-name>UploadServlet</servlet-name>
-    <servlet-class>ru.job4j.dream.servlets.UploadServlet</servlet-class>
+    <servlet-name>CityServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlets.CityServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -66,6 +71,11 @@
   </servlet-mapping>
 
   <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/upload</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/index.do</url-pattern>
   </servlet-mapping>
@@ -81,8 +91,8 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>UploadServlet</servlet-name>
-    <url-pattern>/upload</url-pattern>
+    <servlet-name>CityServlet</servlet-name>
+    <url-pattern>/cities</url-pattern>
   </servlet-mapping>
 
 </web-app>

@@ -17,6 +17,7 @@ public class CandidateServlet extends HttpServlet {
             doDelete(req, resp);
         }
         req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
+        req.setAttribute("cities", PsqlStore.instOf().findAllCities());
         req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
@@ -24,10 +25,11 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
-        PsqlStore.instOf().save(
-                new Candidate(
-                        Integer.parseInt(req.getParameter("id")),
-                        req.getParameter("name")));
+        PsqlStore.instOf().save(new Candidate.Builder()
+                .setId(Integer.parseInt(req.getParameter("id")))
+                .setName(req.getParameter("name"))
+                .setCity_id(Integer.parseInt(req.getParameter("cityId")))
+                .build());
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 
@@ -35,5 +37,4 @@ public class CandidateServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         PsqlStore.instOf().deleteCandidate(Integer.parseInt(req.getParameter("id")));
     }
-
 }
