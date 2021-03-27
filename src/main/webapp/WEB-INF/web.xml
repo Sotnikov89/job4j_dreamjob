@@ -6,9 +6,19 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <filter>
+    <filter-name>CorsFilter</filter-name>
+    <filter-class>ru.job4j.dream.filters.CorsFilter</filter-class>
+  </filter>
+
+  <filter>
     <filter-name>AuthFilter</filter-name>
     <filter-class>ru.job4j.dream.filters.AuthFilter</filter-class>
   </filter>
+
+  <filter-mapping>
+    <filter-name>CorsFilter</filter-name>
+    <url-pattern>/cities</url-pattern>
+  </filter-mapping>
 
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>

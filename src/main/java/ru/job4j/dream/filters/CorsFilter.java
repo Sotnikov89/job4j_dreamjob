@@ -1,24 +1,22 @@
 package ru.job4j.dream.filters;
 
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthFilter implements Filter {
+public class CorsFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        String uri = req.getRequestURI();
-        if (uri.endsWith("auth.do")  || uri.endsWith("reg.do")) {
-            chain.doFilter(request, response);
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+        if (req.getMethod().equals("OPTIONS")) {
+            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
             return;
         }
-        if (req.getSession().getAttribute("user") == null) {
-            resp.sendRedirect(req.getContextPath() + "/login.jsp");
-            return;
-        }
-        chain.doFilter(request, response);
+        chain.doFilter(req, resp);
     }
 }

@@ -21,7 +21,7 @@ public class PsqlStore implements Store {
 
     private PsqlStore() {
         Properties cfg = new Properties();
-        try (BufferedReader io = new BufferedReader(new FileReader("db.properties"))) {
+        try (BufferedReader io = new BufferedReader(new FileReader("C:\\Users\\Вадим\\Desktop\\java\\dreamjob\\db.properties"))) {
             cfg.load(io);
         } catch (Exception e) {
             throw new IllegalStateException(e);
